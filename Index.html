@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Belt Championship</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Libre Baskerville', serif; background: #f0ead6; color: #2a2a1a; min-height: 100vh; }
+.page { max-width: 680px; margin: 0 auto; padding: 0 1.25rem 3rem; }
+.hero { text-align: center; padding: 2.5rem 1rem 2rem; border-bottom: 2px solid #3d4a1e; }
+.hero::after { content: ''; display: block; height: 3px; background: #b8962e; margin: 6px auto 0; width: 60%; }
+.logo-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid #3d4a1e; box-shadow: 0 0 0 6px #b8962e44; margin-bottom: 1rem; }
+.hero-tagline { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 13px; color: #7a6a3a; letter-spacing: 1px; margin-top: 0.75rem; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 2rem 0 1.25rem; }
+.divider-line { flex: 1; height: 1px; background: #3d4a1e88; }
+.divider-text { font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 3px; color: #b8962e; text-transform: uppercase; }
+.origin-box { background: #3d4a1e; border-radius: 4px; padding: 1.5rem; }
+.origin-quote { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #f0ead6; line-height: 1.5; margin-bottom: 1rem; border-left: 3px solid #b8962e; padding-left: 1rem; font-style: italic; }
+.origin-body { font-family: 'Libre Baskerville', serif; font-size: 12px; color: #a0b080; line-height: 1.7; }
+.origin-body strong { color: #b8962e; }
+.origin-footnote { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #ffffff22; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px; color: #6a7a5a; text-transform: uppercase; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.stat-card { background: #3d4a1e; border-radius: 4px; padding: 0.85rem 0.5rem; text-align: center; }
+.stat-num { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; color: #b8962e; line-height: 1; }
+.stat-label { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 9px; color: #a0b080; margin-top: 5px; }
+.leaderboard { display: flex; flex-direction: column; gap: 8px; }
+.lb-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f7f2e4; border: 1.5px solid #3d4a1e44; border-radius: 4px; }
+.lb-pos { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: #b8962e; min-width: 28px; text-align: center; }
+.lb-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #2a2a1a; flex: 1; }
+.lb-wins { font-family: 'Oswald', sans-serif; font-size: 13px; color: #3d4a1e; letter-spacing: 1px; white-space: nowrap; }
+.lb-bar-wrap { width: 80px; height: 6px; background: #3d4a1e22; border-radius: 3px; overflow: hidden; }
+.lb-bar { height: 100%; background: #b8962e; border-radius: 3px; }
+.champions-list { display: flex; flex-direction: column; border: 1.5px solid #3d4a1e; border-radius: 4px; overflow: hidden; }
+.champion-row { display: flex; align-items: stretch; border-bottom: 1px solid #3d4a1e44; background: #f7f2e4; transition: background 0.12s; }
+.champion-row:last-child { border-bottom: none; }
+.champion-row:hover { background: #eee8d0; }
+.champion-row.void-row { background: #f5ede0; }
+.champion-row.not-played { background: #f0ead6; opacity: 0.5; }
+.champion-row.goat-row { background: #fffbee; }
+.champ-year { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 700; color: #f7f2e4; background: #3d4a1e; min-width: 58px; padding: 13px 8px; text-align: center; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; }
+.champ-year.void-year { background: #7a3a1e; }
+.champ-year.not-played-year { background: #6a6a5a; }
+.champ-body { flex: 1; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+.champ-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #2a2a1a; flex: 1; }
+.champ-name.muted { font-family: 'Libre Baskerville', serif; font-style: italic; font-weight: 400; color: #9a8a6a; font-size: 13px; }
+.badge { font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px; padding: 3px 7px; white-space: nowrap; }
+.badge-gold { background: #b8962e22; color: #8a6a1a; border: 1px solid #b8962e66; }
+.badge-void { background: #7a3a1e22; color: #7a3a1e; border: 1px solid #7a3a1e66; }
+.badge-goat { background: #b8962e; color: #fff8e0; }
+.next-box { border: 1.5px solid #3d4a1e; border-radius: 4px; padding: 1.5rem; text-align: center; background: #f7f2e4; }
+.next-box-label { font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #b8962e; margin-bottom: 0.5rem; }
+.next-box-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: #2a2a1a; margin-bottom: 0.4rem; }
+.next-box-sub { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 12px; color: #7a6a3a; }
+.footer { text-align: center; padding: 2rem 0 0; font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 11px; color: #9a8a6a; border-top: 1px solid #3d4a1e44; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <img class="logo-img" src="logo.jpg" alt="The Belt Championship" onerror="this.style.display='none'" />
+    <p class="hero-tagline">"May the best man on the day take the belt home."</p>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">The legend</div><div class="divider-line"></div></div>
+
+  <div class="origin-box">
+    <div class="origin-quote">"Shall we play for this?"</div>
+    <div class="origin-body">
+      It was an ordinary round at Boughton Golf Club, Kent. Sam Johnson reached into his bag and produced a camo canvas belt — <strong>cannabis buckle and all</strong> — belonging to one <strong>Frank Rennie</strong>. Nobody said no. And so the most prestigious prize in Kent golf was born.<br><br>
+      Each champion earns the right to <strong>sew their initials and year of victory</strong> onto the belt as a patch. The belt carries its own history. This website carries the rest.
+    </div>
+    <div class="origin-footnote">Frank Rennie now competes for the belt he once owned. The irony is not lost on anyone.</div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">The record</div><div class="divider-line"></div></div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Tournaments held</div></div>
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Champions</div></div>
+    <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Sam's titles</div></div>
+    <div class="stat-card"><div class="stat-num">2026</div><div class="stat-label">Next up</div></div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">All-time leaderboard</div><div class="divider-line"></div></div>
+
+  <div class="leaderboard">
+    <div class="lb-row"><div class="lb-pos">1</div><div class="lb-name">Sam Johnson 🐐</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div><div class="lb-wins">6 wins</div></div>
+    <div class="lb-row"><div class="lb-pos">2</div><div class="lb-name">Jack O'Sullivan</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:50%"></div></div><div class="lb-wins">3 wins</div></div>
+    <div class="lb-row"><div class="lb-pos">2</div><div class="lb-name">Joe Manuel</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:50%"></div></div><div class="lb-wins">3 wins</div></div>
+    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Jack Parker</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins*</div></div>
+    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Tim Wright</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins</div></div>
+    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Frank Rennie</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins</div></div>
+    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Mo Dack</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins</div></div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">Roll of Honour</div><div class="divider-line"></div></div>
+
+  <div class="champions-list">
+    <div class="champion-row"><div class="champ-year">2011</div><div class="champ-body"><div class="champ-name">Sam Johnson</div><span class="badge badge-gold">Inaugural champion</span></div></div>
+    <div class="champion-row"><div class="champ-year">2012</div><div class="champ-body"><div class="champ-name">Jack O'Sullivan</div></div></div>
+    <div class="champion-row"><div class="champ-year">2013</div><div class="champ-body"><div class="champ-name">Jack O'Sullivan</div><span class="badge badge-gold">Back-to-back</span></div></div>
+    <div class="champion-row not-played"><div class="champ-year not-played-year">2014</div><div class="champ-body"><div class="champ-name muted">Not played</div></div></div>
+    <div class="champion-row"><div class="champ-year">2015</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
+    <div class="champion-row"><div class="champ-year">2016</div><div class="champ-body"><div class="champ-name">Jack O'Sullivan</div><span class="badge badge-gold">Hat-trick complete</span></div></div>
+    <div class="champion-row"><div class="champ-year">2017</div><div class="champ-body"><div class="champ-name">Joe Manuel</div><span class="badge badge-gold">First Belt</span></div></div>
+    <div class="champion-row"><div class="champ-year">2018</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
+    <div class="champion-row void-row"><div class="champ-year void-year">2019</div><div class="champ-body"><div class="champ-name muted">Result voided — belt lost</div><span class="badge badge-void">⚠ Void</span></div></div>
+    <div class="champion-row"><div class="champ-year">2020</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
+    <div class="champion-row"><div class="champ-year">2021</div><div class="champ-body"><div class="champ-name">Joe Manuel</div></div></div>
+    <div class="champion-row"><div class="champ-year">2022</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
+    <div class="champion-row"><div class="champ-year">2023</div><div class="champ-body"><div class="champ-name">Joe Manuel</div></div></div>
+    <div class="champion-row goat-row"><div class="champ-year">2024</div><div class="champ-body"><div class="champ-name">Sam Johnson</div><span class="badge badge-goat">6th title 🐐</span></div></div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">Next Tournament</div><div class="divider-line"></div></div>
+
+  <div class="next-box">
+    <div class="next-box-label">Coming soon</div>
+    <div class="next-box-title">The Belt Championship 2026</div>
+    <p class="next-box-sub">Boughton Golf Club, Kent. Date and format to be announced.<br>Can anyone dethrone the six-time champion?</p>
+  </div>
+
+  <div class="footer">
+    The Belt Championship &bull; Est. 2011 &bull; Boughton Golf Club, Kent &bull; Long may it continue.<br>
+    *Jack Parker's 2019 win was voided after the belt was lost. He has since been reinstated.
+  </div>
+
+</div>
+</body>
+</html>
