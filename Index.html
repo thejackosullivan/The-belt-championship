@@ -1,131 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Belt Championship</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Libre Baskerville', serif; background: #f0ead6; color: #2a2a1a; min-height: 100vh; }
-.page { max-width: 680px; margin: 0 auto; padding: 0 1.25rem 3rem; }
-.hero { text-align: center; padding: 2.5rem 1rem 2rem; border-bottom: 2px solid #3d4a1e; }
-.hero::after { content: ''; display: block; height: 3px; background: #b8962e; margin: 6px auto 0; width: 60%; }
-.logo-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid #3d4a1e; box-shadow: 0 0 0 6px #b8962e44; margin-bottom: 1rem; }
-.hero-tagline { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 13px; color: #7a6a3a; letter-spacing: 1px; margin-top: 0.75rem; }
-.divider { display: flex; align-items: center; gap: 12px; margin: 2rem 0 1.25rem; }
-.divider-line { flex: 1; height: 1px; background: #3d4a1e88; }
-.divider-text { font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 3px; color: #b8962e; text-transform: uppercase; }
-.origin-box { background: #3d4a1e; border-radius: 4px; padding: 1.5rem; }
-.origin-quote { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #f0ead6; line-height: 1.5; margin-bottom: 1rem; border-left: 3px solid #b8962e; padding-left: 1rem; font-style: italic; }
-.origin-body { font-family: 'Libre Baskerville', serif; font-size: 12px; color: #a0b080; line-height: 1.7; }
-.origin-body strong { color: #b8962e; }
-.origin-footnote { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #ffffff22; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px; color: #6a7a5a; text-transform: uppercase; }
-.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.stat-card { background: #3d4a1e; border-radius: 4px; padding: 0.85rem 0.5rem; text-align: center; }
-.stat-num { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; color: #b8962e; line-height: 1; }
-.stat-label { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 9px; color: #a0b080; margin-top: 5px; }
-.leaderboard { display: flex; flex-direction: column; gap: 8px; }
-.lb-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f7f2e4; border: 1.5px solid #3d4a1e44; border-radius: 4px; }
-.lb-pos { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: #b8962e; min-width: 28px; text-align: center; }
-.lb-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #2a2a1a; flex: 1; }
-.lb-wins { font-family: 'Oswald', sans-serif; font-size: 13px; color: #3d4a1e; letter-spacing: 1px; white-space: nowrap; }
-.lb-bar-wrap { width: 80px; height: 6px; background: #3d4a1e22; border-radius: 3px; overflow: hidden; }
-.lb-bar { height: 100%; background: #b8962e; border-radius: 3px; }
-.champions-list { display: flex; flex-direction: column; border: 1.5px solid #3d4a1e; border-radius: 4px; overflow: hidden; }
-.champion-row { display: flex; align-items: stretch; border-bottom: 1px solid #3d4a1e44; background: #f7f2e4; transition: background 0.12s; }
-.champion-row:last-child { border-bottom: none; }
-.champion-row:hover { background: #eee8d0; }
-.champion-row.void-row { background: #f5ede0; }
-.champion-row.not-played { background: #f0ead6; opacity: 0.5; }
-.champion-row.goat-row { background: #fffbee; }
-.champ-year { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 700; color: #f7f2e4; background: #3d4a1e; min-width: 58px; padding: 13px 8px; text-align: center; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; }
-.champ-year.void-year { background: #7a3a1e; }
-.champ-year.not-played-year { background: #6a6a5a; }
-.champ-body { flex: 1; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
-.champ-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #2a2a1a; flex: 1; }
-.champ-name.muted { font-family: 'Libre Baskerville', serif; font-style: italic; font-weight: 400; color: #9a8a6a; font-size: 13px; }
-.badge { font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px; padding: 3px 7px; white-space: nowrap; }
-.badge-gold { background: #b8962e22; color: #8a6a1a; border: 1px solid #b8962e66; }
-.badge-void { background: #7a3a1e22; color: #7a3a1e; border: 1px solid #7a3a1e66; }
-.badge-goat { background: #b8962e; color: #fff8e0; }
-.next-box { border: 1.5px solid #3d4a1e; border-radius: 4px; padding: 1.5rem; text-align: center; background: #f7f2e4; }
-.next-box-label { font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #b8962e; margin-bottom: 0.5rem; }
-.next-box-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: #2a2a1a; margin-bottom: 0.4rem; }
-.next-box-sub { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 12px; color: #7a6a3a; }
-.footer { text-align: center; padding: 2rem 0 0; font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 11px; color: #9a8a6a; border-top: 1px solid #3d4a1e44; margin-top: 2rem; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Belt — Kent Golf Circuit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --parchment: #ede5d0;
+      --parchment-dark: #d9cdb4;
+      --olive: #2c3a1e;
+      --olive-mid: #3d5229;
+      --olive-light: #5a7a3a;
+      --gold: #b8963e;
+      --gold-light: #d4aa55;
+      --gold-pale: #f0e0a0;
+      --rust: #8b3a2a;
+      --ink: #1a1a14;
+      --muted: #7a7060;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background-color: var(--olive);
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.02) 40px,
+        rgba(255,255,255,0.02) 41px
+      );
+      border-bottom: 3px solid var(--gold);
+      padding: 28px 24px 22px;
+      text-align: center;
+      position: relative;
+    }
+
+    .site-header::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: var(--gold-light);
+      opacity: 0.3;
+      margin-top: 20px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .logo-img {
+      height: 80px;
+      width: auto;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+
+    .site-title-block {
+      text-align: left;
+    }
+
+    .site-eyebrow {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .site-subtitle {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.95rem;
+      margin-top: 5px;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      background-color: var(--olive-mid);
+      border-bottom: 2px solid var(--gold);
+      padding: 0 16px;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      text-decoration: none;
+      padding: 12px 14px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .site-nav a:first-child { border-left: 1px solid rgba(255,255,255,0.08); }
+    .site-nav a:hover { color: var(--gold-light); background: rgba(255,255,255,0.05); }
+    .site-nav a.active { color: var(--gold-light); }
+
+    /* ── MAIN ── */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── SEASON BANNER ── */
+    .season-banner {
+      background: var(--olive);
+      border: 2px solid var(--gold);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 16px 24px;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .season-banner-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .season-banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    .season-banner-sub {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 36px 0 20px;
+    }
+
+    .section-header-line {
+      flex: 1;
+      height: 1px;
+      background: var(--parchment-dark);
+    }
+
+    .section-header-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── HERO EVENT (The Belt) ── */
+    .hero-event {
+      background: var(--olive);
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .hero-event::before {
+      content: 'THE MAJOR';
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      background: var(--gold);
+      color: var(--olive);
+      padding: 3px 8px;
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 700;
+    }
+
+    .hero-event-inner {
+      padding: 28px 24px 24px;
+    }
+
+    .hero-event-label {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .hero-event-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .hero-event-meta {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+    }
+
+    .hero-event-desc {
+      color: var(--parchment);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero-champ {
+      background: rgba(184,150,62,0.15);
+      border: 1px solid rgba(184,150,62,0.4);
+      border-radius: 4px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hero-champ-label {
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      display: block;
+    }
+
+    .hero-champ-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .hero-champ-note {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--parchment-dark);
+      font-size: 0.8rem;
+    }
+
+    .event-link {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--olive);
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 20px;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .event-link:hover { background: var(--gold-light); }
+
+    /* ── EVENT GRID ── */
+    .event-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 560px) {
+      .event-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .event-card {
+      background: var(--parchment);
+      border: 1px solid var(--parchment-dark);
+      border-top: 3px solid var(--olive-mid);
+      border-radius: 4px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-top-color 0.2s, box-shadow 0.2s;
+    }
+
+    .event-card:hover {
+      border-top-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .event-card-season {
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .event-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--olive);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .event-card-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .event-card-champ {
+      border-top: 1px solid var(--parchment-dark);
+      padding-top: 10px;
+      font-size: 0.8rem;
+    }
+
+    .event-card-champ-label {
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .event-card-champ-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--olive);
+    }
+
+    .event-card-link {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--olive-mid);
+      font-weight: 700;
+      margin-top: 10px;
+      text-decoration: none;
+      border-bottom: 1px solid var(--olive-mid);
+      padding-bottom: 1px;
+    }
+
+    /* ── LEADERBOARD ── */
+    .leaderboard {
+      background: var(--parchment);
+      border: 1px solid var(--parchment-dark);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--parchment-dark);
+      gap: 14px;
+    }
+
+    .leaderboard-row:last-child { border-bottom: none; }
+
+    .leaderboard-row.goat {
+      background: linear-gradient(90deg, rgba(184,150,62,0.12), transparent);
+    }
+
+    .lb-rank {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--parchment-dark);
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .goat .lb-rank { color: var(--gold); }
+
+    .lb-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--olive);
+      flex: 1;
+    }
+
+    .lb-titles {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .lb-titles strong {
+      font-size: 1.1rem;
+      color: var(--olive);
+      margin-right: 4px;
+    }
+
+    .lb-badge {
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 2px;
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 700;
+    }
+
+    .lb-badge.goat-badge { background: var(--gold); color: var(--olive); }
+
+    /* ── ORIGIN STORY ── */
+    .origin-box {
+      background: var(--parchment);
+      border: 1px solid var(--parchment-dark);
+      border-left: 4px solid var(--olive);
+      border-radius: 4px;
+      padding: 22px 22px 20px;
+    }
+
+    .origin-box-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--olive);
+      margin-bottom: 10px;
+    }
+
+    .origin-box p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--ink);
+    }
+
+    .origin-box p + p { margin-top: 10px; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      border-top: 2px solid var(--parchment-dark);
+      margin-top: 48px;
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    .site-footer strong { color: var(--olive); }
+
+    .ornament {
+      color: var(--gold);
+      font-size: 1.2rem;
+      display: block;
+      margin: 0 auto 10px;
+      letter-spacing: 0.3em;
+    }
+  </style>
 </head>
 <body>
-<div class="page">
 
-  <div class="hero">
-    <img class="logo-img" src="logo.jpg" alt="The Belt Championship" onerror="this.style.display='none'" />
-    <p class="hero-tagline">"May the best man on the day take the belt home."</p>
-  </div>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo.jpg" alt="The Belt Championship logo" />
+      <div class="site-title-block">
+        <span class="site-eyebrow">Est. 2011 · Boughton Golf Club, Kent</span>
+        <div class="site-title">The Belt</div>
+        <div class="site-subtitle">Kent's Premier Golf Circuit</div>
+      </div>
+    </div>
+  </header>
 
-  <div class="divider"><div class="divider-line"></div><div class="divider-text">The legend</div><div class="divider-line"></div></div>
+  <nav class="site-nav">
+    <a href="index.html" class="active">Home</a>
+    <a href="belt.html">The Belt</a>
+    <a href="finkle.html">Finkle Invitational</a>
+    <a href="tour.html">Tour Championship</a>
+    <a href="matchplay.html">Matchplay League</a>
+    <a href="players.html">Players</a>
+    <a href="shame.html">Hall of Shame</a>
+  </nav>
 
-  <div class="origin-box">
-    <div class="origin-quote">"Shall we play for this?"</div>
-    <div class="origin-body">
-      It was an ordinary round at Boughton Golf Club, Kent. Sam Johnson reached into his bag and produced a camo canvas belt — <strong>cannabis buckle and all</strong> — belonging to one <strong>Frank Rennie</strong>. Nobody said no. And so the most prestigious prize in Kent golf was born.<br><br>
-      Each champion earns the right to <strong>sew their initials and year of victory</strong> onto the belt as a patch. The belt carries its own history. This website carries the rest.
+  <div class="page-wrap">
+
+    <div class="season-banner">
+      <span class="season-banner-label">Current Season</span>
+      <div class="season-banner-title">The 2026 Circuit</div>
+      <div class="season-banner-sub">Four events. One group of lads. No mercy.</div>
     </div>
 
-  <div class="divider"><div class="divider-line"></div><div class="divider-text">The record</div><div class="divider-line"></div></div>
+    <!-- THE BELT - HERO -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">The Major</span>
+      <div class="section-header-line"></div>
+    </div>
 
-  <div class="stats-row">
-    <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Tournaments held</div></div>
-    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Champions</div></div>
-    <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Sam's titles</div></div>
-    <div class="stat-card"><div class="stat-num">2026</div><div class="stat-label">Next up</div></div>
+    <div class="hero-event">
+      <div class="hero-event-inner">
+        <span class="hero-event-label">Annual · September · Boughton Golf Club</span>
+        <div class="hero-event-title">The Belt Championship</div>
+        <div class="hero-event-meta">The original. The major. The one that matters.</div>
+        <div class="hero-event-desc">
+          Since 2011, one man has walked away wearing the belt. It began with Sam Johnson pulling a camo canvas belt — cannabis buckle and all — from his golf bag and suggesting the group play for it. The rest is history. Winners earn a patch sewn into the belt itself, a permanent mark of glory.
+        </div>
+        <div class="hero-champ">
+          <div>
+            <span class="hero-champ-label">Reigning Champion — 2024</span>
+            <div class="hero-champ-name">Sam Johnson</div>
+            <div class="hero-champ-note">Six-time champion &amp; undisputed GOAT</div>
+          </div>
+        </div>
+        <a href="belt.html" class="event-link">Full History &amp; Records →</a>
+      </div>
+    </div>
+
+    <!-- OTHER EVENTS -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">The Circuit</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="event-grid">
+
+      <a href="finkle.html" class="event-card">
+        <span class="event-card-season">Spring · Stableford</span>
+        <div class="event-card-title">The Finkle Invitational</div>
+        <div class="event-card-desc">Hosted annually by Frank Rennie. One round, stableford format. Frank competes for his own trophy, which says everything.</div>
+        <div class="event-card-champ">
+          <span class="event-card-champ-label">Latest Champion</span>
+          <div class="event-card-champ-name">To be confirmed</div>
+        </div>
+        <span class="event-card-link">View history →</span>
+      </a>
+
+      <a href="tour.html" class="event-card">
+        <span class="event-card-season">Summer · Multi-round</span>
+        <div class="event-card-title">The Tour Championship</div>
+        <div class="event-card-desc">The annual tour trip. Three or four rounds across various formats, played away from home. The ultimate test of the circuit.</div>
+        <div class="event-card-champ">
+          <span class="event-card-champ-label">Latest Champion</span>
+          <div class="event-card-champ-name">To be confirmed</div>
+        </div>
+        <span class="event-card-link">View history →</span>
+      </a>
+
+      <a href="matchplay.html" class="event-card">
+        <span class="event-card-season">Year-round · Matchplay</span>
+        <div class="event-card-title">The Matchplay League</div>
+        <div class="event-card-desc">Everyone plays everyone throughout the year. The two best players meet in a final come spring. Form is permanent. Class is temporary.</div>
+        <div class="event-card-champ">
+          <span class="event-card-champ-label">Latest Champion</span>
+          <div class="event-card-champ-name">To be confirmed</div>
+        </div>
+        <span class="event-card-link">View history →</span>
+      </a>
+
+      <a href="players.html" class="event-card">
+        <span class="event-card-season">Est. 2011 · Seven players</span>
+        <div class="event-card-title">The Players</div>
+        <div class="event-card-desc">Sam Johnson, Jack O'Sullivan, Jack Parker, Tim Wright, Joe Manuel, Frank Rennie, Mo Dack. Seven men. One belt. Varying levels of ability.</div>
+        <div class="event-card-champ">
+          <span class="event-card-champ-label">Titles combined</span>
+          <div class="event-card-champ-name">Belt: 12 played</div>
+        </div>
+        <span class="event-card-link">View profiles →</span>
+      </a>
+
+    </div>
+
+    <!-- ALL-TIME BELT LEADERBOARD -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">All-Time Belt Leaderboard</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="leaderboard">
+      <div class="leaderboard-row goat">
+        <div class="lb-rank">1</div>
+        <div class="lb-name">Sam Johnson</div>
+        <div class="lb-titles"><strong>6</strong> titles</div>
+        <span class="lb-badge goat-badge">🐐 GOAT</span>
+      </div>
+      <div class="leaderboard-row">
+        <div class="lb-rank">2</div>
+        <div class="lb-name">Joe Manuel</div>
+        <div class="lb-titles"><strong>3</strong> titles</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="lb-rank">2</div>
+        <div class="lb-name">Jack O'Sullivan</div>
+        <div class="lb-titles"><strong>3</strong> titles</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="lb-rank">—</div>
+        <div class="lb-name">Jack Parker</div>
+        <div class="lb-titles"><strong>0</strong> recognised</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="lb-rank">—</div>
+        <div class="lb-name">Tim Wright</div>
+        <div class="lb-titles"><strong>0</strong> titles</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="lb-rank">—</div>
+        <div class="lb-name">Frank Rennie</div>
+        <div class="lb-titles"><strong>0</strong> titles</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="lb-rank">—</div>
+        <div class="lb-name">Mo Dack</div>
+        <div class="lb-titles"><strong>0</strong> titles</div>
+      </div>
+    </div>
+
+    <!-- ORIGIN -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">The Origin</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="origin-box">
+      <div class="origin-box-title">How It All Started</div>
+      <p>It was Sam Johnson who started it. He pulled a camo canvas belt — cannabis buckle and all — from his golf bag. It belonged to Frank Rennie. Sam suggested they play for it. Nobody said no.</p>
+      <p>That was 2011. Since then, the winner of each year's Belt Championship earns the right to sew a patch onto the belt itself — their initials and the year, stitched into the fabric of the thing. A permanent record of glory, carried into every future competition.</p>
+      <p>What began as a throwaway suggestion at Boughton Golf Club is now a fully-fledged circuit. Four events, seven players, and one very important piece of camo canvas.</p>
+    </div>
+
   </div>
 
-  <div class="divider"><div class="divider-line"></div><div class="divider-text">All-time leaderboard</div><div class="divider-line"></div></div>
+  <footer class="site-footer">
+    <span class="ornament">⛳ · ⛳ · ⛳</span>
+    <strong>The Belt</strong> &bull; Est. 2011 &bull; Boughton Golf Club, Kent &bull; Long may it continue.<br />
+    <span style="margin-top:6px;display:block;">*Jack Parker's 2019 Belt win was voided after the belt was lost. He has since been reinstated.</span>
+  </footer>
 
-  <div class="leaderboard">
-    <div class="lb-row"><div class="lb-pos">1</div><div class="lb-name">Sam Johnson </div><div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div><div class="lb-wins">6 wins</div></div>
-    <div class="lb-row"><div class="lb-pos">2</div><div class="lb-name">Jack O'Sullivan</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:50%"></div></div><div class="lb-wins">3 wins</div></div>
-    <div class="lb-row"><div class="lb-pos">2</div><div class="lb-name">Joe Manuel</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:50%"></div></div><div class="lb-wins">3 wins</div></div>
-    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Jack Parker</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins*</div></div>
-    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Tim Wright</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins</div></div>
-    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Frank Rennie</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins</div></div>
-    <div class="lb-row"><div class="lb-pos">4</div><div class="lb-name">Mo Dack</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0%"></div></div><div class="lb-wins">0 wins</div></div>
-  </div>
-
-  <div class="divider"><div class="divider-line"></div><div class="divider-text">Roll of Honour</div><div class="divider-line"></div></div>
-
-  <div class="champions-list">
-    <div class="champion-row"><div class="champ-year">2011</div><div class="champ-body"><div class="champ-name">Sam Johnson</div><span class="badge badge-gold">Inaugural champion</span></div></div>
-    <div class="champion-row"><div class="champ-year">2012</div><div class="champ-body"><div class="champ-name">Jack O'Sullivan</div></div></div>
-    <div class="champion-row"><div class="champ-year">2013</div><div class="champ-body"><div class="champ-name">Jack O'Sullivan</div><span class="badge badge-gold">Back-to-back</span></div></div>
-    <div class="champion-row not-played"><div class="champ-year not-played-year">2014</div><div class="champ-body"><div class="champ-name muted">Not played</div></div></div>
-    <div class="champion-row"><div class="champ-year">2015</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
-    <div class="champion-row"><div class="champ-year">2016</div><div class="champ-body"><div class="champ-name">Jack O'Sullivan</div><span class="badge badge-gold">Hat-trick complete</span></div></div>
-    <div class="champion-row"><div class="champ-year">2017</div><div class="champ-body"><div class="champ-name">Joe Manuel</div><span class="badge badge-gold">First Belt</span></div></div>
-    <div class="champion-row"><div class="champ-year">2018</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
-    <div class="champion-row void-row"><div class="champ-year void-year">2019</div><div class="champ-body"><div class="champ-name muted">Result voided — belt lost</div><span class="badge badge-void">⚠ Void</span></div></div>
-    <div class="champion-row"><div class="champ-year">2020</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
-    <div class="champion-row"><div class="champ-year">2021</div><div class="champ-body"><div class="champ-name">Joe Manuel</div></div></div>
-    <div class="champion-row"><div class="champ-year">2022</div><div class="champ-body"><div class="champ-name">Sam Johnson</div></div></div>
-    <div class="champion-row"><div class="champ-year">2023</div><div class="champ-body"><div class="champ-name">Joe Manuel</div></div></div>
-    <div class="champion-row goat-row"><div class="champ-year">2024</div><div class="champ-body"><div class="champ-name">Sam Johnson</div><span class="badge badge-goat">6th title 🐐</span></div></div>
-  </div>
-
-  <div class="divider"><div class="divider-line"></div><div class="divider-text">Next Tournament</div><div class="divider-line"></div></div>
-
-  <div class="next-box">
-    <div class="next-box-label">Coming soon</div>
-    <div class="next-box-title">The Belt Championship 2026</div>
-    <p class="next-box-sub">Boughton Golf Club, Kent. Date and format to be announced.<br>Can anyone dethrone the six-time champion?</p>
-  </div>
-
-  <div class="footer">
-    The Belt Championship &bull; Est. 2011 &bull; Boughton Golf Club, Kent &bull; Long may it continue.<br>
-    In 2019 the winners victory was voided after the belt was lost.
-  </div>
-
-</div>
 </body>
 </html>
