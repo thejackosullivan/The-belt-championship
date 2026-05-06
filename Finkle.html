@@ -85,7 +85,48 @@
     .fact-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--olive); line-height: 1; }
     .fact-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
 
-    .results-table { background: var(--parchment); border: 1px solid var(--parchment-dark); border-radius: 4px; overflow: hidden; }
+    .current-champ {
+      background: linear-gradient(135deg, var(--olive) 0%, var(--olive-mid) 100%);
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .current-champ-icon {
+      font-size: 2.2rem;
+      flex-shrink: 0;
+    }
+
+    .current-champ-body { flex: 1; }
+
+    .current-champ-label {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .current-champ-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .current-champ-note {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.85rem;
+    }
 
     .results-header { background: var(--olive); padding: 12px 18px; display: grid; grid-template-columns: 60px 1fr 1fr; gap: 12px; }
     .results-header span { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); font-family: 'Libre Baskerville', serif; font-weight: 700; }
@@ -159,6 +200,15 @@
       </div>
     </div>
 
+    <div class="current-champ">
+      <div class="current-champ-icon">🏆</div>
+      <div class="current-champ-body">
+        <span class="current-champ-label">Reigning Champion — 2026</span>
+        <div class="current-champ-name">Joe Manuel</div>
+        <div class="current-champ-note">Finkle Invitational 2026</div>
+      </div>
+    </div>
+
     <div class="section-header">
       <div class="section-header-line"></div>
       <span class="section-header-text">Past Champions</span>
@@ -172,12 +222,12 @@
         <span>Score</span>
       </div>
       <div class="results-row">
-        <div class="result-year">2022</div>
+        <div class="result-year">2020</div>
         <div class="result-winner">Sam Johnson</div>
         <div class="result-score">—</div>
       </div>
       <div class="results-row">
-        <div class="result-year">2023</div>
+        <div class="result-year">2022</div>
         <div class="result-winner">Sam Johnson</div>
         <div class="result-score">—</div>
       </div>
