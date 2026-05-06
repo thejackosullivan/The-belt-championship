@@ -136,38 +136,73 @@
       padding: 0 20px 60px;
     }
 
-    /* ── SEASON BANNER ── */
-    .season-banner {
+    /* ── NEXT EVENT BANNER ── */
+    .next-event-banner {
       background: var(--olive);
       border: 2px solid var(--gold);
       border-top: none;
       border-radius: 0 0 6px 6px;
-      padding: 16px 24px;
+      padding: 22px 24px 24px;
       text-align: center;
       margin-bottom: 36px;
     }
 
-    .season-banner-label {
+    .next-event-label {
       font-size: 9px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold-light);
       display: block;
+      margin-bottom: 8px;
+    }
+
+    .next-event-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.1;
       margin-bottom: 4px;
     }
 
-    .season-banner-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--cream);
-      font-weight: 700;
-    }
-
-    .season-banner-sub {
+    .next-event-meta {
       font-family: 'IM Fell English', serif;
       font-style: italic;
       color: var(--gold-light);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-unit {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(184,150,62,0.35);
+      border-radius: 4px;
+      padding: 10px 14px;
+      min-width: 64px;
+    }
+
+    .countdown-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      line-height: 1;
+      display: block;
+    }
+
+    .countdown-label {
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment-dark);
+      display: block;
       margin-top: 4px;
     }
 
@@ -532,11 +567,46 @@
 
   <div class="page-wrap">
 
-    <div class="season-banner">
-      <span class="season-banner-label">Current Season</span>
-      <div class="season-banner-title">The 2026 Circuit</div>
-      <div class="season-banner-sub">Four events. One group of lads. No mercy.</div>
+    <div class="next-event-banner">
+      <span class="next-event-label">Next Event</span>
+      <div class="next-event-title">Tour Championship 2026</div>
+      <div class="next-event-meta">Donegal, Ireland &nbsp;·&nbsp; July 2026</div>
+      <div class="countdown" id="countdown">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-days">—</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-hours">—</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-mins">—</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+      </div>
     </div>
+
+    <script>
+      // Set to July 1 2026 — update to exact date when confirmed
+      var target = new Date('2026-07-01T09:00:00').getTime();
+      function tick() {
+        var now = new Date().getTime();
+        var diff = target - now;
+        if (diff <= 0) {
+          document.getElementById('countdown').innerHTML = '<span style="color:var(--gold-light);font-family:\'IM Fell English\',serif;font-style:italic;">It\'s time. Get to Donegal.</span>';
+          return;
+        }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        document.getElementById('cd-days').textContent = d;
+        document.getElementById('cd-hours').textContent = h;
+        document.getElementById('cd-mins').textContent = m;
+      }
+      tick();
+      setInterval(tick, 60000);
+    </script>
 
     <!-- THE BELT - HERO -->
     <div class="section-header">
