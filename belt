@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Belt Championship — Full History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --parchment: #ede5d0;
+      --parchment-dark: #d9cdb4;
+      --olive: #2c3a1e;
+      --olive-mid: #3d5229;
+      --olive-light: #5a7a3a;
+      --gold: #b8963e;
+      --gold-light: #d4aa55;
+      --gold-pale: #f0e0a0;
+      --rust: #8b3a2a;
+      --rust-light: #c0523a;
+      --ink: #1a1a14;
+      --muted: #7a7060;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    .site-header {
+      background-color: var(--olive);
+      background-image: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+      border-bottom: 3px solid var(--gold);
+      padding: 28px 24px 22px;
+      text-align: center;
+    }
+
+    .logo-wrap { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+    .logo-img { height: 80px; width: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
+    .site-title-block { text-align: left; }
+    .site-eyebrow { font-family: 'Libre Baskerville', serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); display: block; margin-bottom: 4px; }
+    .site-title { font-family: 'Playfair Display', Georgia, serif; font-size: 2.6rem; font-weight: 900; color: var(--cream); line-height: 1; }
+    .site-subtitle { font-family: 'IM Fell English', Georgia, serif; font-style: italic; color: var(--gold-light); font-size: 0.95rem; margin-top: 5px; }
+
+    .site-nav {
+      background-color: var(--olive-mid);
+      border-bottom: 2px solid var(--gold);
+      padding: 0 16px;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a { font-family: 'Libre Baskerville', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--parchment); text-decoration: none; padding: 12px 14px; border-right: 1px solid rgba(255,255,255,0.08); transition: color 0.2s, background 0.2s; }
+    .site-nav a:first-child { border-left: 1px solid rgba(255,255,255,0.08); }
+    .site-nav a:hover { color: var(--gold-light); background: rgba(255,255,255,0.05); }
+    .site-nav a.active { color: var(--gold-light); }
+
+    .page-wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .page-hero {
+      background: var(--olive);
+      border: 2px solid var(--gold);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .page-hero-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--cream); margin-bottom: 6px; }
+    .page-hero-sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--gold-light); font-size: 1rem; }
+
+    .section-header { display: flex; align-items: center; gap: 12px; margin: 36px 0 20px; }
+    .section-header-line { flex: 1; height: 1px; background: var(--parchment-dark); }
+    .section-header-text { font-family: 'Libre Baskerville', serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+    /* CHAMPION ROLL */
+    .champion-roll { border: 1px solid var(--parchment-dark); border-radius: 4px; overflow: hidden; }
+
+    .champion-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--parchment-dark);
+      gap: 16px;
+      background: var(--parchment);
+      transition: background 0.15s;
+    }
+
+    .champion-row:last-child { border-bottom: none; }
+    .champion-row:hover { background: var(--cream); }
+
+    .champion-row.goat-row { background: linear-gradient(90deg, rgba(184,150,62,0.12), var(--parchment)); }
+    .champion-row.void-row { background: linear-gradient(90deg, rgba(139,58,42,0.08), var(--parchment)); }
+
+    .champ-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      width: 44px;
+      flex-shrink: 0;
+    }
+
+    .void-year { color: var(--rust); }
+
+    .champ-body { flex: 1; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .champ-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--olive); }
+    .champ-name.muted { color: var(--muted); font-style: italic; font-weight: 400; }
+
+    .badge {
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-gold { background: var(--gold); color: var(--olive); }
+    .badge-void { background: var(--rust); color: white; }
+    .badge-goat { background: var(--gold); color: var(--olive); }
+    .badge-not-played { background: var(--parchment-dark); color: var(--muted); }
+
+    /* STAT BOXES */
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    .stat-box {
+      background: var(--parchment);
+      border: 1px solid var(--parchment-dark);
+      border-top: 3px solid var(--olive);
+      border-radius: 4px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--olive); line-height: 1; }
+    .stat-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
+    .stat-note { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+
+    /* ORIGIN */
+    .origin-box { background: var(--parchment); border: 1px solid var(--parchment-dark); border-left: 4px solid var(--olive); border-radius: 4px; padding: 22px; }
+    .origin-box-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--olive); margin-bottom: 12px; }
+    .origin-box p { font-size: 0.88rem; line-height: 1.75; color: var(--ink); }
+    .origin-box p + p { margin-top: 10px; }
+
+    /* NEXT EVENT */
+    .next-box { background: var(--olive); border: 2px solid var(--gold); border-radius: 6px; padding: 24px; text-align: center; }
+    .next-box-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-light); display: block; margin-bottom: 6px; }
+    .next-box-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--cream); margin-bottom: 8px; }
+    .next-box-sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--gold-light); font-size: 0.9rem; line-height: 1.6; }
+
+    .site-footer { border-top: 2px solid var(--parchment-dark); margin-top: 48px; padding: 24px 20px; text-align: center; font-size: 0.75rem; color: var(--muted); font-family: 'Libre Baskerville', serif; }
+    .site-footer strong { color: var(--olive); }
+    .ornament { color: var(--gold); font-size: 1.2rem; display: block; margin: 0 auto 10px; letter-spacing: 0.3em; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo.jpg" alt="The Belt Championship logo" />
+      <div class="site-title-block">
+        <span class="site-eyebrow">Est. 2011 · Boughton Golf Club, Kent</span>
+        <div class="site-title">The Belt</div>
+        <div class="site-subtitle">Kent's Premier Golf Circuit</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="belt.html" class="active">The Belt</a>
+    <a href="finkle.html">Finkle Invitational</a>
+    <a href="tour.html">Tour Championship</a>
+    <a href="matchplay.html">Matchplay League</a>
+    <a href="players.html">Players</a>
+    <a href="shame.html">Hall of Shame</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="page-hero">
+      <div class="page-hero-title">The Belt Championship</div>
+      <div class="page-hero-sub">The major. The original. The one that started it all.</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-number">13</div>
+        <span class="stat-label">Tournaments Held</span>
+        <div class="stat-note">Since 2011</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">6</div>
+        <span class="stat-label">Sam Johnson Titles</span>
+        <div class="stat-note">Undisputed GOAT</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">7</div>
+        <span class="stat-label">Players</span>
+        <div class="stat-note">One belt</div>
+      </div>
+    </div>
+
+    <!-- ROLL OF CHAMPIONS -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">Roll of Champions</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="champion-roll">
+
+      <div class="champion-row">
+        <div class="champ-year">2011</div>
+        <div class="champ-body">
+          <div class="champ-name">Sam Johnson</div>
+          <span class="badge badge-gold">Inaugural Champion</span>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2012</div>
+        <div class="champ-body">
+          <div class="champ-name">Jack O'Sullivan</div>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2013</div>
+        <div class="champ-body">
+          <div class="champ-name">Jack O'Sullivan</div>
+          <span class="badge badge-gold">Back-to-back</span>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year void-year">2014</div>
+        <div class="champ-body">
+          <div class="champ-name muted">Not played</div>
+          <span class="badge badge-not-played">No competition</span>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2015</div>
+        <div class="champ-body">
+          <div class="champ-name">Sam Johnson</div>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2016</div>
+        <div class="champ-body">
+          <div class="champ-name">Jack O'Sullivan</div>
+          <span class="badge badge-gold">Hat-trick complete</span>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2017</div>
+        <div class="champ-body">
+          <div class="champ-name">Joe Manuel</div>
+          <span class="badge badge-gold">First Belt</span>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2018</div>
+        <div class="champ-body">
+          <div class="champ-name">Sam Johnson</div>
+        </div>
+      </div>
+
+      <div class="champion-row void-row">
+        <div class="champ-year void-year">2019</div>
+        <div class="champ-body">
+          <div class="champ-name muted">Result voided — belt lost</div>
+          <span class="badge badge-void">⚠ Void</span>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2020</div>
+        <div class="champ-body">
+          <div class="champ-name">Sam Johnson</div>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2021</div>
+        <div class="champ-body">
+          <div class="champ-name">Joe Manuel</div>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2022</div>
+        <div class="champ-body">
+          <div class="champ-name">Sam Johnson</div>
+        </div>
+      </div>
+
+      <div class="champion-row">
+        <div class="champ-year">2023</div>
+        <div class="champ-body">
+          <div class="champ-name">Joe Manuel</div>
+        </div>
+      </div>
+
+      <div class="champion-row goat-row">
+        <div class="champ-year">2024</div>
+        <div class="champ-body">
+          <div class="champ-name">Sam Johnson</div>
+          <span class="badge badge-goat">6th title 🐐</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ORIGIN -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">Origin Story</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="origin-box">
+      <div class="origin-box-title">How the Belt Came to Be</div>
+      <p>It started with Sam Johnson reaching into his golf bag and pulling out a camo canvas belt with a cannabis leaf buckle. The belt belonged to Frank Rennie. Sam looked at the group and suggested they play for it.</p>
+      <p>Nobody said no. Nobody has said no since.</p>
+      <p>The rules are simple: win The Belt Championship and you earn the right to sew a patch onto the belt — your initials and the year, stitched into the fabric permanently. The belt itself is a living record, worn and patched and carried forward into every future competition.</p>
+      <p>What began at Boughton Golf Club in 2011 as a throwaway suggestion is now in its fifteenth year. The belt has seen six patches from Sam Johnson alone. It has never been more important.</p>
+    </div>
+
+    <!-- NEXT TOURNAMENT -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">Next Tournament</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="next-box">
+      <span class="next-box-label">Coming · September 2026</span>
+      <div class="next-box-title">The Belt Championship 2026</div>
+      <div class="next-box-sub">Boughton Golf Club, Kent.<br />Date and format to be confirmed.<br /><br />Can anyone dethrone the six-time champion?</div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <span class="ornament">⛳ · ⛳ · ⛳</span>
+    <strong>The Belt</strong> &bull; Est. 2011 &bull; Boughton Golf Club, Kent &bull; Long may it continue.<br />
+    <span style="margin-top:6px;display:block;">*Jack Parker's 2019 win was voided after the belt was lost. He has since been reinstated.</span>
+  </footer>
+
+</body>
+</html>
