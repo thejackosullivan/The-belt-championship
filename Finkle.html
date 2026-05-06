@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Finkle Invitational</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --parchment: #ede5d0;
+      --parchment-dark: #d9cdb4;
+      --olive: #2c3a1e;
+      --olive-mid: #3d5229;
+      --gold: #b8963e;
+      --gold-light: #d4aa55;
+      --ink: #1a1a14;
+      --muted: #7a7060;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    .site-header {
+      background-color: var(--olive);
+      background-image: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+      border-bottom: 3px solid var(--gold);
+      padding: 28px 24px 22px;
+      text-align: center;
+    }
+
+    .logo-wrap { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+    .logo-img { height: 80px; width: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
+    .site-title-block { text-align: left; }
+    .site-eyebrow { font-family: 'Libre Baskerville', serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); display: block; margin-bottom: 4px; }
+    .site-title { font-family: 'Playfair Display', Georgia, serif; font-size: 2.6rem; font-weight: 900; color: var(--cream); line-height: 1; }
+    .site-subtitle { font-family: 'IM Fell English', Georgia, serif; font-style: italic; color: var(--gold-light); font-size: 0.95rem; margin-top: 5px; }
+
+    .site-nav {
+      background-color: var(--olive-mid);
+      border-bottom: 2px solid var(--gold);
+      padding: 0 16px;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a { font-family: 'Libre Baskerville', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--parchment); text-decoration: none; padding: 12px 14px; border-right: 1px solid rgba(255,255,255,0.08); transition: color 0.2s, background 0.2s; }
+    .site-nav a:first-child { border-left: 1px solid rgba(255,255,255,0.08); }
+    .site-nav a:hover { color: var(--gold-light); background: rgba(255,255,255,0.05); }
+    .site-nav a.active { color: var(--gold-light); }
+
+    .page-wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .page-hero {
+      background: var(--olive);
+      border: 2px solid var(--gold);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .page-hero-eyebrow { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-light); display: block; margin-bottom: 8px; }
+    .page-hero-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--cream); margin-bottom: 6px; }
+    .page-hero-sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--gold-light); font-size: 1rem; }
+
+    .section-header { display: flex; align-items: center; gap: 12px; margin: 36px 0 20px; }
+    .section-header-line { flex: 1; height: 1px; background: var(--parchment-dark); }
+    .section-header-text { font-family: 'Libre Baskerville', serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+    .fact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (min-width: 480px) { .fact-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .fact-box { background: var(--parchment); border: 1px solid var(--parchment-dark); border-top: 3px solid var(--olive); border-radius: 4px; padding: 14px; text-align: center; }
+    .fact-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--olive); line-height: 1; }
+    .fact-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
+
+    .results-table { background: var(--parchment); border: 1px solid var(--parchment-dark); border-radius: 4px; overflow: hidden; }
+
+    .results-header { background: var(--olive); padding: 12px 18px; display: grid; grid-template-columns: 60px 1fr 1fr; gap: 12px; }
+    .results-header span { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); font-family: 'Libre Baskerville', serif; font-weight: 700; }
+
+    .results-row { display: grid; grid-template-columns: 60px 1fr 1fr; gap: 12px; padding: 13px 18px; border-bottom: 1px solid var(--parchment-dark); align-items: center; }
+    .results-row:last-child { border-bottom: none; }
+    .results-row.tbc { opacity: 0.45; }
+
+    .result-year { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--muted); }
+    .result-winner { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--olive); }
+    .result-winner.pending { color: var(--muted); font-style: italic; font-weight: 400; font-family: 'IM Fell English', serif; }
+    .result-score { font-size: 0.82rem; color: var(--muted); }
+
+    .next-box { background: var(--olive); border: 2px solid var(--gold); border-radius: 6px; padding: 24px; text-align: center; }
+    .next-box-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-light); display: block; margin-bottom: 6px; }
+    .next-box-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--cream); margin-bottom: 8px; }
+    .next-box-sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--gold-light); font-size: 0.9rem; line-height: 1.6; }
+
+    .site-footer { border-top: 2px solid var(--parchment-dark); margin-top: 48px; padding: 24px 20px; text-align: center; font-size: 0.75rem; color: var(--muted); font-family: 'Libre Baskerville', serif; }
+    .site-footer strong { color: var(--olive); }
+    .ornament { color: var(--gold); font-size: 1.2rem; display: block; margin: 0 auto 10px; letter-spacing: 0.3em; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo.jpg" alt="The Belt Championship logo" />
+      <div class="site-title-block">
+        <span class="site-eyebrow">Est. 2011 · Boughton Golf Club, Kent</span>
+        <div class="site-title">The Belt</div>
+        <div class="site-subtitle">Kent's Premier Golf Circuit</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="belt.html">The Belt</a>
+    <a href="finkle.html" class="active">Finkle Invitational</a>
+    <a href="tour.html">Tour Championship</a>
+    <a href="matchplay.html">Matchplay League</a>
+    <a href="players.html">Players</a>
+    <a href="shame.html">Hall of Shame</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="page-hero">
+      <span class="page-hero-eyebrow">Annual · Spring · Stableford</span>
+      <div class="page-hero-title">The Finkle Invitational</div>
+      <div class="page-hero-sub">Hosted by Frank Rennie</div>
+    </div>
+
+    <div class="fact-grid">
+      <div class="fact-box">
+        <div class="fact-value">1</div>
+        <span class="fact-label">Round</span>
+      </div>
+      <div class="fact-box">
+        <div class="fact-value">Stableford</div>
+        <span class="fact-label">Format</span>
+      </div>
+      <div class="fact-box">
+        <div class="fact-value">Spring</div>
+        <span class="fact-label">Season</span>
+      </div>
+      <div class="fact-box">
+        <div class="fact-value">Frank</div>
+        <span class="fact-label">Host</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">Past Champions</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="results-table">
+      <div class="results-header">
+        <span>Year</span>
+        <span>Champion</span>
+        <span>Score</span>
+      </div>
+      <div class="results-row tbc">
+        <div class="result-year">—</div>
+        <div class="result-winner pending">Results to be added</div>
+        <div class="result-score">—</div>
+      </div>
+      <div class="results-row tbc">
+        <div class="result-year">—</div>
+        <div class="result-winner pending">Results to be added</div>
+        <div class="result-score">—</div>
+      </div>
+      <div class="results-row tbc">
+        <div class="result-year">—</div>
+        <div class="result-winner pending">Results to be added</div>
+        <div class="result-score">—</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <span class="section-header-text">Next Event</span>
+      <div class="section-header-line"></div>
+    </div>
+
+    <div class="next-box">
+      <span class="next-box-label">Coming · Spring 2026</span>
+      <div class="next-box-title">The Finkle Invitational 2026</div>
+      <div class="next-box-sub">Date and venue to be confirmed.</div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <span class="ornament">⛳ · ⛳ · ⛳</span>
+    <strong>The Belt</strong> &bull; Est. 2011 &bull; Boughton Golf Club, Kent &bull; Long may it continue.
+  </footer>
+
+</body>
+</html>
